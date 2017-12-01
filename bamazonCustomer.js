@@ -39,6 +39,7 @@ function productSearch() {
         type: "input",
         message: "Enter ID of product you want to purchase.",
       },
+
     ])
     .then(function (user) {
       console.log(user.selectID);
@@ -65,7 +66,15 @@ function productSearch() {
           .then(function (howMany) {
             console.log(howMany.selectAmount);
             connection.query("SELECT * FROM products WHERE ?", { id: howMany.selectAmount }, function (err, res) {
+              for (var i = 0; i < res.length; i++) {
 
+                if (res[i].stock_qty < howMany.selectAmount) {
+                  console.log("OUT OF STOCK, Please check back later");
+                } else if (res[i].stock_qty >= howMany.selectAmount) {
+                  console.log("you're in luck we have stock");
+                  // price
+                }  // purchase
+              }
 
             })
           });
