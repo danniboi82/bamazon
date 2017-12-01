@@ -43,15 +43,17 @@ function productSearch() {
     .then(function (user) {
       console.log(user.selectID);
       connection.query("SELECT * FROM products WHERE ?", { id: user.selectID }, function (err, res) {
-        console.log("Product_ID: " +
-          res[0].id +
-          " || Product_Name: " +
-          res[0].product_name +
-          " || Department_name: " +
-          res[0].department_name +
-          " || Price: " +
-          res[0].price
-        )
+        for (var i = 0; i < res.length; i++) {
+          console.log("Product_ID: " +
+            res[0].id +
+            " || Product_Name: " +
+            res[0].product_name +
+            " || Department_name: " +
+            res[0].department_name +
+            " || Price: " +
+            res[0].price
+          )
+        }
         inquirer
           .prompt([
             {
@@ -60,8 +62,15 @@ function productSearch() {
               message: "Enter the quanity."
             }
           ])
+          .then(function (howMany) {
+            console.log(howMany.selectAmount);
+            connection.query("SELECT * FROM products WHERE ?", { id: howMany.selectAmount }, function (err, res) {
+
+
+            })
+          });
       });
-    });
 
+    }
+    )
 }
-
