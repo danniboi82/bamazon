@@ -1,3 +1,4 @@
+//how do we manually change the values in data such as price and qty??? mysql or from .sql file?? 
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
@@ -66,14 +67,14 @@ function productSearch() {
           .then(function (howMany) {
             console.log(howMany.selectAmount);
             connection.query("SELECT * FROM products WHERE ?", { id: howMany.selectAmount }, function (err, res) {
-              for (var i = 0; i < res.length; i++) {
-
-                if (res[i].stock_qty < howMany.selectAmount) {
+              for (var i = 0; i < res.length; i++) {               
+                if (res[i].stock_qty >= howMany.selectAmount) {
+                  console.log("you're in luck we have " + howMany.selectAmount + " stock");
+                  //i don't understand why the else if statement below is not working properly.
+                } else if (res[i].stock_qty < howMany.selectAmount){
                   console.log("OUT OF STOCK, Please check back later");
-                } else if (res[i].stock_qty >= howMany.selectAmount) {
-                  console.log("you're in luck we have stock");
-                  // price
-                }  // purchase
+              
+                }  
               }
 
             })
